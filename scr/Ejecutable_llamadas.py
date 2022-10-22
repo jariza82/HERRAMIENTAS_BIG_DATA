@@ -16,12 +16,10 @@ def change_nulls(df):
     return df 
 
 def change_type(df):
-
     for columna in df.columns:
-        if df[columna]=='FECHA_INICIO_DESPLAZAMIENTO_MOVIL':
-            df[col] = pd.to_datetime(df[col],errors='coerce')
+        if columna == 'FECHA_INICIO_DESPLAZAMIENTO_MOVIL':
+            df[columna] = pd.to_datetime(df[columna],errors='coerce')
     return df
-
 
 
 def Borrar_d(df):
@@ -40,13 +38,17 @@ def generate_file(df,file_name):
     table_name='esp_big_jca.reporte_llamadas'
     df.to_gbq(table_name,if_exists='replace')
 
-def main ():
-    filenames = ["llamadas123_agosto_2022.csv","llamadas123_julio_2022.csv"]
+def main ():    
+    
+    filenames = ["llamadas123_agosto_2022.csv","llamadas123_julio_2022.csv","llamadas123_junio_2022.csv"
+                ,"llamadas123_marzo_2022.csv","llamadas123_febrero_2022.csv","llamadas123_enero_2022.csv"
+                ,"llamadas_123_diciembre_2021.csv","llamadas_123_noviembre_2021.csv","llamadas_123_octubre_2021.csv"
+                ,"llamadas_123_septiembre2021.csv"]
     dfr = []
     for filename in filenames:
         df1 = get_data(filename)
         df1 = change_nulls(df1)
-        #df1 = change_type(df1,'FECHA_INICIO_DESPLAZAMIENTO_MOVIL')
+        df1 = change_type(df1)
         df1 = Borrar_d(df1)
      
         
